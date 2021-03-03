@@ -1,5 +1,5 @@
 import Stats from 'stats-js';
-import Orbitcontrols from 'three-orbitcontrols';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
 var THREE = (window.THREE = require('three'));
@@ -42,7 +42,7 @@ export class VirtualDrive {
     this.scene.add(this.group);
 
     //角度控制
-    const control = new Orbitcontrols(camera, renderer.domElement);
+    const control = new OrbitControls(camera, renderer.domElement);
     control.target = new THREE.Vector3(0, 0, 0); // 控制焦点
     control.autoRotate = false;
     control.screenSpacePanning = true;
@@ -83,7 +83,7 @@ export class VirtualDrive {
       { file: 'urinary bladder', color: 0xe18a95 },
       { file: 'uterus', color: 0x6868b4 },
       { file: 'vein', color: 0x144e85 },
-    ].forEach(item => {
+    ].forEach((item) => {
       this.load(item);
     });
   }
@@ -92,7 +92,7 @@ export class VirtualDrive {
     //STL文件加载器 加载所有的.stl文件，每个stl对应一个模型模块
     this.loader.load(
       require('assets/' + stl.file + '.stl'),
-      geometry => {
+      (geometry) => {
         // let _material = this.material.clone().setValues({ color: stl.color });
         const mesh = new THREE.Mesh(geometry, this.material);
         mesh.castShadow = true;
@@ -100,7 +100,7 @@ export class VirtualDrive {
         this.group.add(mesh);
       },
       null,
-      function(xhr) {
+      function (xhr) {
         console.error(xhr);
       },
     );
